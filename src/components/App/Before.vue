@@ -12,4 +12,15 @@ export default {};
 *::after {
   box-sizing: border-box;
 }
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+}
 </style>
