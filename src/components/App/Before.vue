@@ -20,6 +20,7 @@ body {
 }
 
 body {
+  color: $color-black;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
 }
