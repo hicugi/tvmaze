@@ -1,7 +1,7 @@
 <template>
   <input
     class="ui-input"
-    v-bind="{ type, value }"
+    v-bind="{ value }"
     v-on="$listeners"
     @input="handleInput"
   />
