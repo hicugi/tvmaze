@@ -44,5 +44,18 @@ export default {
     max-width: $container-width;
     display: flex;
   }
+
+  @include breakpointMd {
+    &__container {
+      padding-left: $container-gap-md;
+      padding-right: $container-gap-md;
+    }
+  }
+  @include breakpointLg {
+    &__container {
+      padding-left: $container-gap-lg;
+      padding-right: $container-gap-lg;
+    }
+  }
 }
 </style>

@@ -5,5 +5,33 @@ $color-white: #ffffff;
 $color-black: #1f1f1f;
 $color-gray: #e4eaf2;
 
-$container-width: 1200px;
-$container-gap: 15px;
+$container-width: 1292px;
+$container-gap-lg: 76px;
+$container-gap-md: 48px;
+$container-gap: 24px;
+
+$breakpoint-xlg: 1456px;
+$breakpoint-lg: 1112px;
+$breakpoint-md: 800px;
+$breakpoint-sm: 548px;
+
+@mixin breakpointXlg {
+  @media (min-width: #{$breakpoint-xlg}) {
+    @content;
+  }
+}
+@mixin breakpointLg {
+  @media (min-width: #{$breakpoint-lg}) {
+    @content;
+  }
+}
+@mixin breakpointMd {
+  @media (min-width: #{$breakpoint-md}) {
+    @content;
+  }
+}
+@mixin breakpointSm {
+  @media (min-width: #{$breakpoint-sm}) {
+    @content;
+  }
+}

@@ -114,6 +114,7 @@ export default {
       const getValue = (key) => parseInt(cssExport[key].replace("px", ""));
 
       const breakpointIndex = [
+        w >= getValue("breakpointXlg"),
         w >= getValue("breakpointLg"),
         w >= getValue("breakpointMd"),
         w >= getValue("breakpointSm"),
@@ -121,6 +122,7 @@ export default {
       ].findIndex((condition) => condition);
 
       this.visibleItemsLength = [
+        "visibleItemsLengthXlg",
         "visibleItemsLengthLg",
         "visibleItemsLengthMd",
         "visibleItemsLengthSm",
@@ -128,6 +130,7 @@ export default {
       ].map(getValue)[breakpointIndex];
 
       this.containerGap = [
+        ["arrowWidthLg", "itemGapLg"],
         ["arrowWidthLg", "itemGapLg"],
         ["arrowWidthMd", "itemGapMd"],
         ["arrowWidth", "itemGap"],
