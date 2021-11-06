@@ -1,0 +1,73 @@
+.c-showsCard {
+  $name-height: 24px;
+
+  position: relative;
+
+  &-image {
+    position: relative;
+    background: $color-gray no-repeat center;
+    background-size: cover;
+
+    &::before {
+      content: "";
+      padding-top: calc(100% * (12 / 9));
+      display: block;
+    }
+
+    &__img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.00001;
+    }
+  }
+
+  &__name,
+  &__name-placeholder {
+    margin: 0;
+    padding: 6px 12px;
+  }
+  &__name {
+    font-size: 18px;
+    line-height: $name-height;
+    background-color: $color-black;
+    color: $color-white;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__name-placeholder {
+    position: relative;
+    height: $name-height;
+    background-color: $color-gray;
+    overflow: hidden;
+  }
+  &_placeholder &-image::after {
+    $size: 100px;
+    $animKey: cShowsCardImage;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border: 5px solid;
+    border-color: transparent transparent transparent $color-white;
+    border-radius: 100%;
+    width: $size;
+    height: $size;
+    animation: linear 1.5s $animKey infinite;
+    content: "";
+
+    @keyframes #{cShowsCardImage} {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+  }
+}

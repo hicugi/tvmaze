@@ -1,0 +1,108 @@
+$visible-items: 5;
+
+$arrow-width: 60px;
+$item-gap: 16px;
+$container-gap: $arrow-width + $item-gap;
+
+$item-width: calc(
+  (100vw - #{$container-gap} * 2 - #{$item-gap * ($visible-items - 1)}) / #{$visible-items}
+);
+$slider-width: calc(100vw - #{$item-gap} * 2);
+
+:export {
+  containerGap: $container-gap;
+}
+
+.c-showsList {
+  margin-bottom: 10px;
+  overflow: hidden;
+
+  &__container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__title {
+    margin: 40px 0 15px;
+    padding: 0 #{$container-gap};
+    font-size: 26px;
+    left: 1.25em;
+  }
+
+  &-list {
+    $width: 100vw;
+
+    position: relative;
+    width: $width;
+    max-width: $width;
+    display: block;
+
+    &__container {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      overflow: hidden;
+      scroll-behavior: smooth;
+
+      &::before,
+      &::after {
+        min-width: #{$arrow-width + $item-gap};
+        display: block;
+        content: "";
+      }
+    }
+
+    &__item {
+      min-width: $item-width;
+
+      & + & {
+        margin-left: $item-gap;
+      }
+    }
+  }
+
+  &__arrow {
+    $icon-border-width: 4px;
+    $icon-size: 28px;
+    $icon-color: $color-white;
+
+    position: absolute;
+    top: 50%;
+    border: 0;
+    width: $arrow-width;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    text-indent: -99999px;
+    overflow: hidden;
+    transition: linear 0.2s opacity;
+    will-change: opacity;
+
+    &::before {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(calc(-25% + #{$icon-border-width / 2}), -50%)
+        rotate(-45deg);
+      border: $icon-border-width solid;
+      border-color: $icon-color transparent transparent $icon-color;
+      width: $icon-size;
+      height: $icon-size;
+      content: "";
+    }
+
+    &_prev {
+      left: 0;
+      transform: translateY(-50%);
+    }
+    &_next {
+      right: 0;
+      transform: translateY(-50%) scale(-1, 1);
+    }
+  }
+
+  &:hover &__arrow {
+    opacity: 1;
+  }
+}
