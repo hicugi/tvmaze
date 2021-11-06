@@ -68,6 +68,7 @@ export default {
   },
   data: () => ({
     visibleItemsLength: 5,
+    containerGap: 76,
     scrollIndex: 0,
   }),
   computed: {
@@ -92,7 +93,53 @@ export default {
     },
   },
 
+  mounted() {
+    this.initResizeEvent();
+  },
+  beforeDestroy() {
+    this.destroyResizeEvent();
+  },
+
   methods: {
+    initResizeEvent() {
+      this.handleResize();
+      window.addEventListener("resize", this.handleResize);
+    },
+    destroyResizeEvent() {
+      window.removeEventListener("resize", this.handleResize);
+    },
+
+    handleResize() {
+      const w = window.innerWidth;
+      const getValue = (key) => parseInt(cssExport[key].replace("px", ""));
+
+      const breakpointIndex = [
+        w >= getValue("breakpointLg"),
+        w >= getValue("breakpointMd"),
+        w >= getValue("breakpointSm"),
+        true,
+      ].findIndex((condition) => condition);
+
+      this.visibleItemsLength = [
+        "visibleItemsLengthLg",
+        "visibleItemsLengthMd",
+        "visibleItemsLengthSm",
+        "visibleItemsLength",
+      ].map(getValue)[breakpointIndex];
+
+      this.containerGap = [
+        ["arrowWidthLg", "itemGapLg"],
+        ["arrowWidthMd", "itemGapMd"],
+        ["arrowWidth", "itemGap"],
+        ["arrowWidth", "itemGap"],
+      ].map(([v1, v2]) => getValue(v1) + getValue(v2))[breakpointIndex];
+
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = setTimeout(() => {
+        this.scrollSlider(this.scrollIndex);
+      }, 300);
+    },
+
     getCardVisibleProp(index) {
       const [min, max] = this.minMaxScrollIndexes;
       return min <= index && index < max;
@@ -105,17 +152,14 @@ export default {
       const { visibleItemsLength } = this;
 
       const nthIndex = index * visibleItemsLength + 1;
-      const selector = `li:nth-child(${nthIndex})`;
+      const selector = `.${this.listItemClass}:nth-child(${nthIndex})`;
+
       return sliderContainer.querySelector(selector);
     },
-
     scrollSlider(newIndex) {
       const { sliderContainer } = this.$refs;
+      const { containerGap } = this;
 
-      const item = sliderContainer.querySelector(`.${this.listItemClass}`);
-      if (!item) return;
-
-      const containerGap = parseInt(cssExport.containerGap.replace("px", ""));
       const scrollToItem = this.getNextSlideItem(newIndex);
       const scrollToX = scrollToItem.offsetLeft - containerGap;
 

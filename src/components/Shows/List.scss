@@ -1,19 +1,60 @@
-$visible-items: 5;
+$visible-items-length-lg: 5;
+$visible-items-length-md: 4;
+$visible-items-length-sm: 3;
+$visible-items-length: 2;
 
-$arrow-width: 60px;
-$item-gap: 16px;
-$container-gap: $arrow-width + $item-gap;
+$breakpoint-lg: 1112px;
+$breakpoint-md: 800px;
+$breakpoint-sm: 548px;
+
+$arrow-width-lg: 60px;
+$arrow-width-md: 40px;
+$arrow-width: 20px;
+
+$item-gap-lg: 16px;
+$item-gap-md: 8px;
+$item-gap: 4px;
+
+$icon-border-width-lg: 4px;
+$icon-border-width: 2px;
+$icon-size-lg: 28px;
+$icon-size-md: 20px;
+$icon-size: 14px;
 
 $item-width: calc(
-  (100vw - #{$container-gap} * 2 - #{$item-gap * ($visible-items - 1)}) / #{$visible-items}
+  (
+      100vw - var(--container-gap) * 2 - var(--item-gap) *
+        (var(--visible-items-length) - 1)
+    ) / var(--visible-items-length)
 );
-$slider-width: calc(100vw - #{$item-gap} * 2);
 
 :export {
-  containerGap: $container-gap;
+  visibleItemsLengthLg: $visible-items-length-lg;
+  visibleItemsLengthMd: $visible-items-length-md;
+  visibleItemsLengthSm: $visible-items-length-sm;
+  visibleItemsLength: $visible-items-length;
+
+  breakpointLg: $breakpoint-lg;
+  breakpointMd: $breakpoint-md;
+  breakpointSm: $breakpoint-sm;
+
+  arrowWidthLg: $arrow-width-lg;
+  arrowWidthMd: $arrow-width-md;
+  arrowWidth: $arrow-width;
+
+  itemGapLg: $item-gap-lg;
+  itemGapMd: $item-gap-md;
+  itemGap: $item-gap;
 }
 
 .c-showsList {
+  --visible-items-length: #{$visible-items-length};
+  --item-gap: #{$item-gap};
+  --arrow-width: #{$arrow-width};
+  --container-gap: calc(var(--arrow-width) + var(--item-gap));
+  --icon-border-width: #{$icon-border-width};
+  --icon-size: #{$icon-size};
+
   margin-bottom: 10px;
   overflow: hidden;
 
@@ -24,7 +65,7 @@ $slider-width: calc(100vw - #{$item-gap} * 2);
 
   &__title {
     margin: 40px 0 15px;
-    padding: 0 #{$container-gap};
+    padding: 0 var(--container-gap);
     font-size: 26px;
     left: 1.25em;
   }
@@ -47,7 +88,7 @@ $slider-width: calc(100vw - #{$item-gap} * 2);
 
       &::before,
       &::after {
-        min-width: #{$arrow-width + $item-gap};
+        min-width: var(--container-gap);
         display: block;
         content: "";
       }
@@ -57,20 +98,18 @@ $slider-width: calc(100vw - #{$item-gap} * 2);
       min-width: $item-width;
 
       & + & {
-        margin-left: $item-gap;
+        margin-left: var(--item-gap);
       }
     }
   }
 
   &__arrow {
-    $icon-border-width: 4px;
-    $icon-size: 28px;
     $icon-color: $color-white;
 
     position: absolute;
     top: 50%;
     border: 0;
-    width: $arrow-width;
+    width: var(--arrow-width);
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3);
     opacity: 0;
@@ -83,12 +122,12 @@ $slider-width: calc(100vw - #{$item-gap} * 2);
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(calc(-25% + #{$icon-border-width / 2}), -50%)
+      transform: translate(calc(-25% + var(--icon-border-width) / 2), -50%)
         rotate(-45deg);
-      border: $icon-border-width solid;
+      border: var(--icon-border-width) solid;
       border-color: $icon-color transparent transparent $icon-color;
-      width: $icon-size;
-      height: $icon-size;
+      width: var(--icon-size);
+      height: var(--icon-size);
       content: "";
     }
 
@@ -104,5 +143,22 @@ $slider-width: calc(100vw - #{$item-gap} * 2);
 
   &:hover &__arrow {
     opacity: 1;
+  }
+
+  @media (min-width: #{$breakpoint-sm}) {
+    --visible-items-length: #{$visible-items-length-sm};
+  }
+  @media (min-width: #{$breakpoint-md}) {
+    --visible-items-length: #{$visible-items-length-md};
+    --arrow-width: #{$arrow-width-md};
+    --item-gap: #{$item-gap-md};
+    --icon-size: #{$icon-size-md};
+  }
+  @media (min-width: #{$breakpoint-lg}) {
+    --visible-items-length: #{$visible-items-length-lg};
+    --arrow-width: #{$arrow-width-lg};
+    --item-gap: #{$item-gap-lg};
+    --icon-border-width: #{$icon-border-width-lg};
+    --icon-size: #{$icon-size-lg};
   }
 }
