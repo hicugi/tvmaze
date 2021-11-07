@@ -1,17 +1,24 @@
 <template>
   <div :class="className">
-    <LoadingBlock v-if="isLoading" title="Wait a bit, it's loading" />
+    <div :class="`${className}__container`">
+      <LoadingBlock v-if="isLoading" title="Wait a bit, it's loading" />
+      <Alert v-if="error" variant="error" v-text="error" />
+
+      <ShowsPreview v-if="info" v-bind="info" />
+    </div>
   </div>
 </template>
 
 <script>
 import LoadingBlock from "@/components/LoadingBlock.vue";
+import Alert from "@/components/Alert.vue";
+import ShowsPreview from "@/components/Shows/Preview.vue";
 import api from "@/helpers/api";
 
 export default {
   name: "PageShowId",
 
-  components: { LoadingBlock },
+  components: { LoadingBlock, Alert, ShowsPreview },
   props: {
     className: {
       type: String,
@@ -20,10 +27,13 @@ export default {
   },
   data: () => ({
     isLoading: true,
+    error: null,
+
+    info: null,
   }),
 
   mounted() {
-    // this.fetchInfo();
+    this.fetchInfo();
   },
 
   methods: {
@@ -33,7 +43,16 @@ export default {
       const { id } = this.$route.params;
       api
         .getShowInfo(id)
-        .then(console.log)
+        .then((data) => {
+          this.info = data;
+        })
+
+        .catch((error) => {
+          if (error.message === "404") {
+            this.error = "Resource not found";
+          }
+        })
+
         .finally(() => {
           this.isLoading = false;
         });
@@ -41,3 +60,25 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.p-showId {
+  margin: 40px 0;
+
+  &__container {
+    margin: 0 auto;
+    padding-left: $container-gap;
+    padding-right: $container-gap;
+    max-width: $container-width;
+
+    @include breakpointMd {
+      padding-left: $container-gap-md;
+      padding-right: $container-gap-md;
+    }
+    @include breakpointLg {
+      padding-left: $container-gap-lg;
+      padding-right: $container-gap-lg;
+    }
+  }
+}
+</style>

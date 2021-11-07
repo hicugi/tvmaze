@@ -20,6 +20,7 @@ body {
 }
 
 body {
+  min-width: 320px;
   color: $color-black;
   font-family: "Roboto", sans-serif;
   font-size: 14px;

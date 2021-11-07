@@ -13,15 +13,22 @@ const api = {
 
     const formattedUrl = formattedQuery ? [url, formattedQuery].join("?") : url;
 
-    return fetch(generateUrl(formattedUrl), ...atrs).then((response) =>
-      response.json()
-    );
+    return fetch(generateUrl(formattedUrl), ...atrs).then((response) => {
+      const { status } = response;
+
+      if (status === 404) {
+        throw new Error(404);
+      }
+
+      return response.json();
+    });
   },
 
   getShows(query) {
     return this.get("shows", query).then((data) => data.map(this.mapShowsItem));
   },
-  mapShowsItem: ({ name, image, genres, rating, ...extra }) => ({
+  mapShowsItem: ({ id, name, image, genres, rating, ...extra }) => ({
+    id,
     name,
     image: (image || {}).medium,
     genres,
@@ -29,8 +36,30 @@ const api = {
     extra,
   }),
 
-  get showGenres() {
-    return Object.entries(this.showFilters.genre).map(([key]) => key);
+  getShowInfo(urlId) {
+    return this.get(`shows/${urlId}`).then(
+      ({
+        id,
+        name,
+        summary,
+        image,
+        averageRuntime,
+        genres,
+        officialSite,
+        language,
+        ...extra
+      }) => ({
+        id,
+        name,
+        description: summary,
+        image,
+        language,
+        averageRuntime,
+        genres,
+        website: officialSite,
+        extra,
+      })
+    );
   },
 };
 

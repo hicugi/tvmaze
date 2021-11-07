@@ -1,0 +1,92 @@
+$gap: 15px;
+
+.c-showsPreview {
+  margin-left: -$gap;
+  margin-right: -$gap;
+
+  &__col {
+    padding-left: $gap;
+    padding-right: $gap;
+
+    &_info {
+      flex-grow: 1;
+    }
+  }
+
+  &-info {
+    margin-bottom: 20px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__title {
+    margin: 0 0 15px;
+    font-size: 26px;
+    line-height: 1.25em;
+  }
+  &__description {
+    p {
+      margin: 0 0 1em;
+      font-size: 14px;
+      line-height: 1.25em;
+    }
+  }
+
+  &-genres {
+    margin-bottom: 6px;
+
+    &__title {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 19px;
+    }
+    &__item {
+      z-index: 0;
+      position: relative;
+      margin-left: 8px;
+      margin-bottom: 2px;
+      padding: 2px 8px 3px;
+      border-radius: 3px;
+      display: inline-block;
+      background-color: $color-black;
+      color: $color-white;
+      font-size: 14px;
+      line-height: 1em;
+    }
+  }
+
+  &-extra-info {
+    $gap: 7px;
+
+    margin: 0 #{-$gap};
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+
+    &__item {
+      padding-left: $gap;
+      padding-right: $gap;
+    }
+
+    a {
+      color: $color-primary;
+    }
+  }
+
+  @include breakpointMd {
+    display: flex;
+
+    &__col {
+      &_image {
+        order: 1;
+      }
+      &_info {
+        order: 2;
+      }
+    }
+  }
+}
