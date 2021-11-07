@@ -1,24 +1,18 @@
 <template>
-  <div :class="className">
+  <div class="p-index">
     <template v-for="(item, index) in sectionList">
-      <ThisList v-bind="item" :key="index" :loading="loading" />
+      <ShowList v-bind="item" :key="index" :loading="loading" />
     </template>
   </div>
 </template>
 
 <script>
 import api from "@/helpers/api";
-import ThisList from "./List.vue";
+import ShowList from "@/components/Shows/List.vue";
 
 export default {
-  components: { ThisList },
-
-  props: {
-    className: {
-      type: String,
-      default: "c-shows",
-    },
-  },
+  name: 'PageHome',
+  components: { ShowList },
 
   data: () => ({
     loading: true,
@@ -75,9 +69,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-// .c-shows {
-
-// }
-</style>
