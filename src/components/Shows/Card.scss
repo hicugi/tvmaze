@@ -1,17 +1,41 @@
 .c-showsCard {
+  $self: &;
   $name-height: 24px;
 
+  z-index: 0;
   position: relative;
+
+  &__link {
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 2px solid transparent;
+    width: 100%;
+    height: 100%;
+    text-indent: -9999px;
+    overflow: hidden;
+
+    &:focus,
+    &:hover {
+      ~ #{$self}-image #{$self}-image__bg {
+        transform: scale(1.05);
+      }
+    }
+  }
 
   &-image {
     position: relative;
-    background: $color-gray no-repeat center;
-    background-size: cover;
+    padding: 2px 2px 0;
+    background-color: $color-black;
+    overflow: hidden;
 
-    &::before {
-      content: "";
+    &__bg {
       padding-top: calc(100% * (12 / 9));
-      display: block;
+      background: $color-gray no-repeat center;
+      background-size: cover;
+      transition: ease-out 0.2s;
+      will-change: transform;
     }
 
     &__img {

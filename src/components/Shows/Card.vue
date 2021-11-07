@@ -1,8 +1,22 @@
 <template>
   <div :class="computedClass">
     <template v-if="visible">
-      <div :class="`${className}-image`" :style="imageStyles">
-        <img :class="`${className}-image__img`" :src="image" :alt="name" />
+      <RouterLink
+        v-if="!placeholder"
+        :class="`${className}__link`"
+        :to="link"
+        target="_blank"
+        v-text="name"
+      />
+
+      <div :class="`${className}-image`">
+        <div :class="`${className}-image__bg`" :style="imageStyles" />
+        <img
+          v-if="image"
+          :class="`${className}-image__img`"
+          :src="image"
+          :alt="name"
+        />
       </div>
 
       <h3
@@ -25,6 +39,7 @@
 export default {
   inheritAttrs: false,
   props: {
+    id: Number,
     name: String,
     image: String,
 
@@ -41,6 +56,11 @@ export default {
       return ["", this.placeholder && "_placeholder"]
         .filter((v) => typeof v === "string")
         .map((v) => [this.className, v].join(""));
+    },
+
+    link() {
+      const { id } = this;
+      return { name: "showId", params: { id } };
     },
 
     imageStyles() {
