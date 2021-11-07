@@ -1,7 +1,7 @@
 <template>
   <div class="p-index">
     <template v-for="(item, index) in sectionList">
-      <ShowList v-bind="item" :key="index" :loading="loading" />
+      <ShowList v-bind="item" :key="index" :loading="isLoading" />
     </template>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
   components: { ShowList },
 
   data: () => ({
-    loading: true,
+    isLoading: true,
     items: [],
   }),
   computed: {
@@ -55,7 +55,7 @@ export default {
       this.fetchItems();
     },
     fetchItems() {
-      this.loading = true;
+      this.isLoading = true;
 
       api
         .getShows()
@@ -63,7 +63,7 @@ export default {
           this.items = data;
         })
         .finally(() => {
-          this.loading = false;
+          this.isLoading = false;
         });
     },
   },
