@@ -1,0 +1,70 @@
+.c-search {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: $color-black;
+
+  &__container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: $container-gap;
+    padding-right: $container-gap;
+    max-width: $container-width;
+    display: flex;
+  }
+
+  &__logo {
+    margin-right: 18px;
+    display: block;
+    color: $color-white;
+    font-size: 24px;
+    line-height: 37px;
+    text-decoration: none;
+  }
+
+  @include breakpointMd {
+    &__container {
+      padding-left: $container-gap-md;
+      padding-right: $container-gap-md;
+    }
+  }
+  @include breakpointLg {
+    &__container {
+      padding-left: $container-gap-lg;
+      padding-right: $container-gap-lg;
+    }
+  }
+
+  @include breakpointSmMax {
+    &__btn {
+      position: relative;
+      text-indent: -99999px;
+
+      &::before {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -2px;
+        margin-top: -2px;
+        transform: translate(-50%, -50%);
+        border: 2px solid currentColor;
+        border-radius: 100%;
+        width: 16px;
+        height: 16px;
+        display: block;
+        content: "";
+      }
+      &::after {
+        position: absolute;
+        left: calc(50% + 6px);
+        top: calc(50% + 6px);
+        transform: translate(-50%, -50%) rotate(-45deg);
+        border-radius: 3px;
+        width: 2px;
+        height: 8px;
+        display: block;
+        background: currentColor;
+        content: "";
+      }
+    }
+  }
+}

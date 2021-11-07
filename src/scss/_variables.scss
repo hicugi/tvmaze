@@ -38,3 +38,8 @@ $breakpoint-sm: 548px;
     @content;
   }
 }
+@mixin breakpointSmMax {
+  @media (max-width: #{$breakpoint-sm - 0.002}) {
+    @content;
+  }
+}

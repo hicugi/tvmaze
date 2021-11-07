@@ -1,10 +1,18 @@
 <template>
-  <div :class="className">
+  <header :class="className">
     <form :class="`${className}__container`" @submit.prevent="handleSubmit">
+      <RouterLink
+        :class="`${className}__logo`"
+        :to="{ name: 'home' }"
+        v-text="'TV'"
+      />
+
       <UiInput v-model="keywords" type="search" placeholder="Search" />
-      <UiButton type="submit" variant="primary">Submit</UiButton>
+      <UiButton :class="`${className}__btn`" type="submit" variant="primary"
+        >Submit</UiButton
+      >
     </form>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -30,32 +38,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.c-search {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  background: $color-black;
-
-  &__container {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: $container-gap;
-    padding-right: $container-gap;
-    max-width: $container-width;
-    display: flex;
-  }
-
-  @include breakpointMd {
-    &__container {
-      padding-left: $container-gap-md;
-      padding-right: $container-gap-md;
-    }
-  }
-  @include breakpointLg {
-    &__container {
-      padding-left: $container-gap-lg;
-      padding-right: $container-gap-lg;
-    }
-  }
-}
-</style>
+<style lang="scss" src="./index.scss" />
