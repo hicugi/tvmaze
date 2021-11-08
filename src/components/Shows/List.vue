@@ -85,9 +85,8 @@ export default {
       const maxItems = this.visibleItemsLength;
       const { scrollIndex } = this;
 
-      const min =
-        (scrollIndex ? scrollIndex - 1 : scrollIndex * (maxItems + 1)) - 2;
-      const max = (scrollIndex + 2) * maxItems;
+      const min = (scrollIndex - maxItems * 2) - 1;
+      const max = (scrollIndex + maxItems * 2) + 1;
 
       return [min, max];
     },
@@ -148,34 +147,31 @@ export default {
       return min <= index && index < max;
     },
 
-    getNextSlideItem(index) {
+    getDomItem(index) {
       const { sliderContainer } = this.$refs;
       if (!sliderContainer) return;
 
-      const { visibleItemsLength } = this;
-
-      const nthIndex = index * visibleItemsLength + 1;
-      const selector = `.${this.listItemClass}:nth-child(${nthIndex})`;
+      const selector = `.${this.listItemClass}:nth-child(${index + 1})`;
 
       return sliderContainer.querySelector(selector);
     },
-    scrollSlider(newIndex) {
+    scrollSlider(itemIndex) {
       const { sliderContainer } = this.$refs;
       const { containerGap } = this;
 
-      const scrollToItem = this.getNextSlideItem(newIndex);
+      const scrollToItem = this.getDomItem(itemIndex);
       const scrollToX = scrollToItem.offsetLeft - containerGap;
 
       sliderContainer.scrollTo(scrollToX, 0);
 
-      this.scrollIndex = newIndex;
+      this.scrollIndex = itemIndex;
     },
     handlePrevClick() {
-      const nextIndex = this.scrollIndex - 1;
-      this.scrollSlider(nextIndex);
+      const prevIndex = this.scrollIndex - this.visibleItemsLength;
+      this.scrollSlider(prevIndex);
     },
     handleNextClick() {
-      const prevIndex = this.scrollIndex + 1;
+      const prevIndex = this.scrollIndex + this.visibleItemsLength;
       this.scrollSlider(prevIndex);
     },
   },
