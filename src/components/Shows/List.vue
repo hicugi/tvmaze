@@ -77,16 +77,14 @@ export default {
     },
 
     isNextBtnVisible() {
-      return (
-        this.items.length > (this.scrollIndex + 1) * this.visibleItemsLength
-      );
+      return this.items.length > this.scrollIndex + this.visibleItemsLength;
     },
     minMaxScrollIndexes() {
       const maxItems = this.visibleItemsLength;
       const { scrollIndex } = this;
 
-      const min = (scrollIndex - maxItems * 2) - 1;
-      const max = (scrollIndex + maxItems * 2) + 1;
+      const min = scrollIndex - maxItems * 2 - 1;
+      const max = scrollIndex + maxItems * 2 + 1;
 
       return [min, max];
     },
