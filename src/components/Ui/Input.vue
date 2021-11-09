@@ -35,5 +35,9 @@ export default {
   display: block;
   font-size: 16px;
   line-height: 1.25em;
+
+  &[type="search"] {
+    -webkit-appearance: none;
+  }
 }
 </style>
