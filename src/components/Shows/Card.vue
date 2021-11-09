@@ -17,7 +17,10 @@
           :src="image"
           :alt="name"
         />
-        <div v-else :class="`${className}-image__undefined`" />
+        <div
+          v-if="!loading && !image"
+          :class="`${className}-image__undefined`"
+        />
       </div>
 
       <h3
