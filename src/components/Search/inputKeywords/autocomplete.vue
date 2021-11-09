@@ -2,15 +2,30 @@
   <div :class="[className, isActive && `${className}--active`]">
     <slot />
 
-    <ul v-if="options.length" ref="options" :class="`${className}-options`">
+    <ul
+      v-if="loading || optionsEmpty || options.length"
+      ref="options"
+      :class="`${className}-options`"
+    >
+      <li v-if="loading">
+        <span :class="`${className}-options__loading`" />
+      </li>
+      <li v-if="optionsEmpty">
+        <span
+          :class="`${className}-options__empty`"
+          v-text="'Results not found'"
+        />
+      </li>
+
       <template v-for="(item, index) in options">
         <li :key="index" :class="getItemClass(index)">
           <button
             :class="`${className}-options__btn`"
+            :disabled="getItemDisableProp(item)"
             type="button"
             tabindex="-1"
             @click="handleOptionClick(item)"
-            v-text="getItemText(item)"
+            v-text="item.name"
           />
         </li>
       </template>
@@ -30,11 +45,12 @@ export default {
       default: () => [],
     },
 
-    itemLabelKey: String,
+    loading: Boolean,
+    optionsEmpty: Boolean,
 
     className: {
       type: String,
-      default: "ui-autocomplete",
+      default: "c-searchInputKeywordsAutocomplete",
     },
   },
   data: () => ({
@@ -66,10 +82,8 @@ export default {
         .filter((v) => typeof v === "string")
         .map((v) => [this.className, "-options__item", v].join(""));
     },
-    getItemText(item) {
-      const { itemLabelKey } = this;
-      if (itemLabelKey) return item[itemLabelKey];
-      return item;
+    getItemDisableProp({ id }) {
+      return this.$route.name === "showId" && this.$route.params.id === id;
     },
 
     getInput() {
@@ -166,10 +180,11 @@ export default {
     },
 
     handleOptionClick(item) {
+      if (this.getItemDisableProp(item)) return;
       this.$emit("select", item);
     },
   },
 };
 </script>
 
-<style lang="scss" src="./Autocomplete.scss" />
+<style lang="scss" src="./autocomplete.scss" />

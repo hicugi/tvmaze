@@ -17,7 +17,7 @@
 
 <script>
 import UiButton from "@/components/Ui/Button.vue";
-import ThisInputKeywords from "./inputKeywords.vue";
+import ThisInputKeywords from "./inputKeywords/index.vue";
 
 export default {
   components: { UiButton, ThisInputKeywords },

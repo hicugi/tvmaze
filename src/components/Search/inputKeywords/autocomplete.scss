@@ -6,7 +6,11 @@ $options-btn-color: $color-black;
 $options-btn-focus-bg-color: $color-black;
 $options-btn-focus-color: $color-white;
 
-.ui-autocomplete {
+$options-loading-color: $color-black;
+$options-loading-size: 42px;
+$options-loading-anim-key: ui;
+
+.c-searchInputKeywordsAutocomplete {
   position: relative;
 
   &-options {
@@ -19,11 +23,46 @@ $options-btn-focus-color: $color-white;
     margin: 0;
     padding: 0;
     border: none;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     width: 100%;
     display: None;
     background-color: white;
-    border-radius: 4px;
     list-style: none;
+
+    &__loading {
+      position: relative;
+      display: block;
+      height: #{$options-loading-size + 20px};
+
+      &::before {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border: 2px solid;
+        border-color: transparent transparent transparent $options-loading-color;
+        border-radius: 100%;
+        width: $options-loading-size;
+        height: $options-loading-size;
+        animation: $options-loading-anim-key 1s linear infinite;
+        content: "";
+
+        @keyframes #{$options-loading-anim-key} {
+          from {
+            transform: translate(-50%, -50%) rotate(0deg);
+          }
+          to {
+            transform: translate(-50%, -50%) rotate(360deg);
+          }
+        }
+      }
+    }
+    &__empty {
+      padding: 6px 12px 7px;
+      display: block;
+      font-size: 14px;
+      line-height: 1.25em;
+    }
 
     &__item {
       $border: 1px solid $options-border-color;
@@ -45,14 +84,14 @@ $options-btn-focus-color: $color-white;
     }
 
     &__btn {
-      padding: 4px 1.45em;
+      padding: 6px 12px 7px;
       width: 100%;
       border: none;
       display: block;
       background: $options-btn-bg-color;
       color: $options-btn-color;
       font-family: inherit;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 1.25em;
       text-align: left;
       will-change: color;
@@ -62,6 +101,10 @@ $options-btn-focus-color: $color-white;
       &--focused {
         background-color: $options-btn-focus-bg-color;
         color: $options-btn-focus-color;
+      }
+
+      &:disabled {
+        opacity: 0.5;
       }
     }
   }

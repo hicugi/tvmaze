@@ -65,9 +65,13 @@ const api = {
   },
 
   getSearchedShows(keywords) {
-    return this.get("/search/shows", { q: keywords }).then((data) =>
-      data.map(this.mapSearchShowsItems)
-    );
+    return this.get("/search/shows", { q: keywords }).then((data) => {
+      if (!data.length) {
+        throw new Error("No results");
+      }
+
+      return data.map(this.mapSearchShowsItems);
+    });
   },
   mapSearchShowsItems: ({ show }) => ({
     id: show.id,
