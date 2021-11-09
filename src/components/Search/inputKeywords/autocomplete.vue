@@ -64,6 +64,7 @@ export default {
       }
     },
     options() {
+      this.isActive = true;
       this.focusIndex = null;
     },
   },
@@ -165,6 +166,7 @@ export default {
           else index -= 1;
         }
 
+        this.isActive = true;
         this.focusIndex = index;
         e.preventDefault();
         return;

@@ -7,7 +7,11 @@
         v-text="'TV'"
       />
 
-      <ThisInputKeywords :class="`${className}__control`" v-model="keywords" />
+      <ThisInputKeywords
+        :key="inputKeywordsKey"
+        :class="`${className}__control`"
+        v-model="keywords"
+      />
       <UiButton :class="`${className}__btn`" type="submit" variant="primary"
         >Submit</UiButton
       >
@@ -29,6 +33,7 @@ export default {
     },
   },
   data: () => ({
+    inputKeywordsKey: 0,
     keywords: "",
   }),
 
@@ -39,6 +44,8 @@ export default {
       if (keywords.length < 2) return;
       if ($route.name === "search" && $route.query.q === keywords) return;
 
+      this.keywords = "";
+      this.inputKeywordsKey += 1;
       this.$router.push({ name: "search", query: { q: keywords } });
     },
   },
