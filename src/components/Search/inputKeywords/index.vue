@@ -87,11 +87,6 @@ export default {
     },
 
     handleSelectOption({ id }) {
-      // const routerName = "showId";
-
-      // const currentId = this.$route.params.id;
-      // if (this.$route.name === routerName || currentId === id) return;
-
       this.elmKey += 1;
       this.options = [];
       this.$emit("change", "");
