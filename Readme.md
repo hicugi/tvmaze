@@ -20,13 +20,13 @@
 
 [Live demo](http://tvmaze.webmaho.com/).
 
-[AppBefore](src/components/App/Before.vue) made for styles which comes before all other components.
+[AppBefore](src/components/App/Before.vue) made for styles which come before all other components.
 
-Class names in components has one place of truth. Whenever you want to change class, you have to make it in 2 places (css & props). Also `className` can be replaced by parent and has new styles. `c-` stays for components and `p-` for pages.</p>
+Class names in components have one place of truth. Whenever you want to change class, you have to perform the change in two places (css & props). Also `className` can be replaced by parent and has new styles. `c-` stays for components and `p-` for pages.</p>
 
 Router navigation uses `name`, `params` & `query` from `vue-router`.
 
-[UiInput](src/components/Ui/Input.vue) component stays close to original `input` as much as possiable but with `v-model` support.
+[UiInput](src/components/Ui/Input.vue) component stays close to original `input` as much as possible but with `v-model` support.
 
 ## Pros
 
