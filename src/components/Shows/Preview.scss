@@ -77,6 +77,24 @@ $gap: 15px;
     }
   }
 
+  &-image {
+    &__ready {
+      background-color: $color-gray;
+      display: block;
+    }
+    &__undefined {
+      width: 210px;
+      background: url('/assets/img/no-image.svg') no-repeat center $color-gray;
+      background-size: 64px;
+
+      &::before {
+        padding-top: calc(100% * (12 / 9));
+        display: block;
+        content: "";
+      }
+    }
+  }
+
   @include breakpointMd {
     display: flex;
 

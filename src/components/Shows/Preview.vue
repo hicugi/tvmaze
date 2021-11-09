@@ -40,7 +40,17 @@
     </div>
 
     <div :class="[`${className}__col`, `${className}__col_image`]">
-      <img :class="`${className}__image`" :src="image.medium" />
+      <div :class="`${className}-image`">
+        <img
+          v-if="selectedImage"
+          :class="`${className}-image__ready`"
+          :src="selectedImage"
+          :alt="name"
+          width="210px"
+          height="295px"
+        />
+        <div v-else :class="`${className}-image__undefined`" />
+      </div>
     </div>
   </div>
 </template>
@@ -74,6 +84,10 @@ export default {
     formattedWebsite() {
       const url = new URL(this.website);
       return url.host;
+    },
+
+    selectedImage() {
+      return (this.image || {}).medium;
     },
   },
 };
