@@ -18,11 +18,15 @@
 
 <h2 align="center">Test project with API from <a href="https://www.tvmaze.com/">TvMaze</a></h2>
 
-<p><a href="http://tvmaze.webmaho.com/">Live demo</a>.</p>
-<p><a href="src/components/App/Before.vue">AppBefore</a> made for styles which comes before all other components.</p>
-<p>Class names in components has one place of truth. Whenever you want to change class, you have to make it in 2 places (css & props). Also `className` can be replaced by parent and has new styles. `c-` stays for components and `p-` for pages.</p>
-<p>Router navigation uses `name`, `params` & `query` from `vue-router`.</p>
-<p><a href="src/components/Ui/Input.vue">UiInput</a> component stays close to original `input` as much as possiable but with `v-model` support.</p>
+[Live demo](http://tvmaze.webmaho.com/).
+
+[AppBefore](src/components/App/Before.vue) made for styles which comes before all other components.
+
+Class names in components has one place of truth. Whenever you want to change class, you have to make it in 2 places (css & props). Also `className` can be replaced by parent and has new styles. `c-` stays for components and `p-` for pages.</p>
+
+Router navigation uses `name`, `params` & `query` from `vue-router`.
+
+[UiInput](src/components/Ui/Input.vue) component stays close to original `input` as much as possiable but with `v-model` support.
 
 ## Pros
 
