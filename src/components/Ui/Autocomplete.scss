@@ -1,0 +1,72 @@
+$options-border-color: $color-gray;
+
+$options-btn-bg-color: $color-white;
+$options-btn-color: $color-black;
+
+$options-btn-focus-bg-color: $color-black;
+$options-btn-focus-color: $color-white;
+
+.ui-autocomplete {
+  position: relative;
+
+  &-options {
+    $options: &;
+
+    z-index: 5;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    width: 100%;
+    display: None;
+    background-color: white;
+    border-radius: 4px;
+    list-style: none;
+
+    &__item {
+      $border: 1px solid $options-border-color;
+      border-left: $border;
+      border-right: $border;
+      will-change: background-color, color;
+
+      &:first-child {
+        border-top: $border;
+      }
+      &:last-child {
+        border-bottom: $border;
+      }
+
+      &--focused #{$options}__btn {
+        background-color: $options-btn-focus-bg-color;
+        color: $options-btn-focus-color;
+      }
+    }
+
+    &__btn {
+      padding: 4px 1.45em;
+      width: 100%;
+      border: none;
+      display: block;
+      background: $options-btn-bg-color;
+      color: $options-btn-color;
+      font-family: inherit;
+      font-size: 12px;
+      line-height: 1.25em;
+      text-align: left;
+      will-change: color;
+
+      &:hover,
+      &:focus,
+      &--focused {
+        background-color: $options-btn-focus-bg-color;
+        color: $options-btn-focus-color;
+      }
+    }
+  }
+
+  &--active &-options {
+    display: block;
+  }
+}

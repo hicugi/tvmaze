@@ -31,6 +31,14 @@ export default {
 
     info: null,
   }),
+  watch: {
+    $route(newValue, value) {
+      if (newValue.path !== (value || {}).path) {
+        this.info = null;
+        this.fetchInfo();
+      }
+    },
+  },
 
   mounted() {
     this.fetchInfo();

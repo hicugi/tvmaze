@@ -7,7 +7,7 @@
         v-text="'TV'"
       />
 
-      <UiInput v-model="keywords" type="search" placeholder="Search" />
+      <ThisInputKeywords :class="`${className}__control`" v-model="keywords" />
       <UiButton :class="`${className}__btn`" type="submit" variant="primary"
         >Submit</UiButton
       >
@@ -17,10 +17,10 @@
 
 <script>
 import UiButton from "@/components/Ui/Button.vue";
-import UiInput from "@/components/Ui/Input.vue";
+import ThisInputKeywords from "./inputKeywords.vue";
 
 export default {
-  components: { UiInput, UiButton },
+  components: { UiButton, ThisInputKeywords },
 
   props: {
     className: {

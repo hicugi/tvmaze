@@ -63,6 +63,16 @@ const api = {
       })
     );
   },
+
+  getSearchedShows(keywords) {
+    return this.get("/search/shows", { q: keywords }).then((data) =>
+      data.map(this.mapSearchShowsItems)
+    );
+  },
+  mapSearchShowsItems: ({ show }) => ({
+    id: show.id,
+    name: show.name,
+  }),
 };
 
 export default api;

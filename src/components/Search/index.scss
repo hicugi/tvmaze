@@ -20,6 +20,9 @@
     line-height: 37px;
     text-decoration: none;
   }
+  &__control {
+    flex-grow: 1;
+  }
 
   @include breakpointMd {
     &__container {
