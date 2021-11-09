@@ -1,4 +1,4 @@
-const BASE_URL = "https://api.tvmaze.com/";
+const BASE_URL = "https://api.tvmaze.com";
 
 const generateUrl = (v) => [BASE_URL, v].join("");
 
@@ -25,7 +25,9 @@ const api = {
   },
 
   getShows(query) {
-    return this.get("shows", query).then((data) => data.map(this.mapShowsItem));
+    return this.get("/shows", query).then((data) =>
+      data.map(this.mapShowsItem)
+    );
   },
   mapShowsItem: ({ id, name, image, genres, rating, ...extra }) => ({
     id,
@@ -37,7 +39,7 @@ const api = {
   }),
 
   getShowInfo(urlId) {
-    return this.get(`shows/${urlId}`).then(
+    return this.get(`/shows/${urlId}`).then(
       ({
         id,
         name,
