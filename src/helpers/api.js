@@ -29,13 +29,12 @@ const api = {
       data.map(this.mapShowsItem)
     );
   },
-  mapShowsItem: ({ id, name, image, genres, rating, ...extra }) => ({
+  mapShowsItem: ({ id, name, image, genres, rating }) => ({
     id,
     name,
     image: (image || {}).medium,
     genres,
     rating: rating.average,
-    extra,
   }),
 
   getShowInfo(urlId) {
@@ -49,7 +48,6 @@ const api = {
         genres,
         officialSite,
         language,
-        ...extra
       }) => ({
         id,
         name,
@@ -59,7 +57,6 @@ const api = {
         averageRuntime,
         genres,
         website: officialSite,
-        extra,
       })
     );
   },
@@ -70,13 +67,9 @@ const api = {
         throw new Error("No results");
       }
 
-      return data.map(this.mapSearchShowsItems);
+      return data.map((v) => this.mapShowsItem(v.show));
     });
   },
-  mapSearchShowsItems: ({ show }) => ({
-    id: show.id,
-    name: show.name,
-  }),
 };
 
 export default api;

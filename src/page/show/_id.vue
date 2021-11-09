@@ -74,19 +74,7 @@ export default {
   margin: 40px 0;
 
   &__container {
-    margin: 0 auto;
-    padding-left: $container-gap;
-    padding-right: $container-gap;
-    max-width: $container-width;
-
-    @include breakpointMd {
-      padding-left: $container-gap-md;
-      padding-right: $container-gap-md;
-    }
-    @include breakpointLg {
-      padding-left: $container-gap-lg;
-      padding-right: $container-gap-lg;
-    }
+    @include container;
   }
 }
 </style>

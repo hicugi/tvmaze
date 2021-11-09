@@ -43,3 +43,20 @@ $breakpoint-sm: 548px;
     @content;
   }
 }
+
+@mixin container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-gap;
+  padding-right: $container-gap;
+  max-width: $container-width;
+
+  @include breakpointMd {
+    padding-left: $container-gap-md;
+    padding-right: $container-gap-md;
+  }
+  @include breakpointLg {
+    padding-left: $container-gap-lg;
+    padding-right: $container-gap-lg;
+  }
+}

@@ -33,7 +33,14 @@ export default {
   }),
 
   methods: {
-    handleSubmit() {},
+    handleSubmit() {
+      const { keywords, $route } = this;
+
+      if (keywords.length < 2) return;
+      if ($route.name === "search" && $route.query.q === keywords) return;
+
+      this.$router.push({ name: "search", query: { q: keywords } });
+    },
   },
 };
 </script>
