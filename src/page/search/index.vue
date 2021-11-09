@@ -2,7 +2,10 @@
   <div :class="className">
     <h1 :class="`${className}__title`" v-text="title" />
 
-    <ul :class="`${className}-list`">
+    <LoadingBlock v-if="isLoading" title="Wait a bit, it's loading" />
+    <Alert v-if="error" variant="error" v-text="error" />
+
+    <ul v-if="!isLoading && items.length" :class="`${className}-list`">
       <template v-for="(item, index) in items">
         <li :key="index" :class="`${className}-list__item`">
           <ShowsCard v-bind="item" visible />
@@ -13,12 +16,15 @@
 </template>
 
 <script>
+import LoadingBlock from "@/components/LoadingBlock.vue";
+import Alert from "@/components/Alert.vue";
 import ShowsCard from "@/components/Shows/Card.vue";
+
 import api from "@/helpers/api";
 
 export default {
   name: "PageSearch",
-  components: { ShowsCard },
+  components: { LoadingBlock, Alert, ShowsCard },
 
   props: {
     className: {
@@ -26,7 +32,11 @@ export default {
       default: "p-search",
     },
   },
-  data: () => ({ items: [] }),
+  data: () => ({
+    isLoading: true,
+    error: null,
+    items: [],
+  }),
   computed: {
     searchQuery() {
       return this.$route.query.q;
@@ -49,57 +59,26 @@ export default {
 
   methods: {
     fetchItems() {
-      api.getSearchedShows(this.searchQuery).then((data) => {
-        this.items = data;
-      });
+      this.isLoading = true;
+      this.error = null;
+      this.items = [];
+
+      api
+        .getSearchedShows(this.searchQuery)
+        .then((data) => {
+          this.items = data;
+        })
+
+        .catch((error) => {
+          this.error = error.message;
+        })
+
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
   },
 };
 </script>
 
-<style lang="scss">
-$items-gap: 8px;
-
-$items-inline: 2;
-$items-inline-sm: 3;
-$items-inline-md: 4;
-$items-inline-lg: 5;
-
-.p-search {
-  --items-inline: #{$items-inline};
-
-  @include container;
-  margin-top: 40px;
-
-  &__title {
-    margin: 0 0 20px;
-    font-size: 26px;
-    left: 1.25em;
-  }
-
-  &-list {
-    margin: 0 #{-$items-gap};
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-
-    &__item {
-      margin-bottom: $items-gap * 2;
-      padding-left: $items-gap;
-      padding-right: $items-gap;
-      width: calc(100% / var(--items-inline));
-    }
-  }
-
-  @include breakpointSm() {
-    --items-inline: #{$items-inline-sm};
-  }
-  @include breakpointMd() {
-    --items-inline: #{$items-inline-md};
-  }
-  @include breakpointLg() {
-    --items-inline: #{$items-inline-lg};
-  }
-}
-</style>
+<style lang="scss" src="./index.scss" />
