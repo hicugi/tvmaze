@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import SweetScroll from "sweet-scroll";
 import ThisCard from "./Card.vue";
 import cssExport from "./List.scss";
 
@@ -94,6 +95,8 @@ export default {
   },
 
   mounted() {
+    this.scroller = new SweetScroll({}, this.$refs.sliderContainer);
+
     this.initResizeEvent();
     this.initTouchEvents();
   },
@@ -184,13 +187,12 @@ export default {
       return sliderContainer.querySelector(selector);
     },
     scrollSlider(itemIndex) {
-      const { sliderContainer } = this.$refs;
       const { containerGap } = this;
 
       const scrollToItem = this.getDomItem(itemIndex);
       const scrollToX = scrollToItem.offsetLeft - containerGap;
 
-      sliderContainer.scrollTo({ left: scrollToX, behavior: "smooth" });
+      this.scroller.toLeft(scrollToX);
 
       this.scrollIndex = itemIndex;
     },

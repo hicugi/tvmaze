@@ -83,7 +83,7 @@ $item-width: calc(
       list-style: none;
       display: flex;
       overflow: hidden;
-      scroll-behavior: smooth;
+      // scroll-behavior: smooth;
 
       &::before,
       &::after {
