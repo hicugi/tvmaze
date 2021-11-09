@@ -163,4 +163,8 @@ $item-width: calc(
   @include breakpointXlg {
     --visible-items-length: #{$visible-items-length-xlg};
   }
+
+  @include breakpointSmMax {
+    cursor: pointer;
+  }
 }

@@ -76,6 +76,9 @@ export default {
       return `${this.className}-list__item`;
     },
 
+    isPrevBtnVisible() {
+      return this.scrollIndex > 0;
+    },
     isNextBtnVisible() {
       return this.items.length > this.scrollIndex + this.visibleItemsLength;
     },
@@ -92,6 +95,7 @@ export default {
 
   mounted() {
     this.initResizeEvent();
+    this.initTouchEvents();
   },
   beforeDestroy() {
     this.destroyResizeEvent();
@@ -104,6 +108,16 @@ export default {
     },
     destroyResizeEvent() {
       window.removeEventListener("resize", this.handleResize);
+    },
+
+    initTouchEvents() {
+      this.asd = 0;
+      this.$el.addEventListener("touchstart", this.handleTouchStart, false);
+      this.$el.addEventListener("touchend", this.handleTouhcEnd, false);
+    },
+    destroyTouchEvents() {
+      this.$el.removeEventListener("touchstart", this.handleTouchStart);
+      this.$el.removeEventListener("touchend", this.handleTouhcEnd);
     },
 
     handleResize() {
@@ -140,6 +154,22 @@ export default {
       }, 300);
     },
 
+    handleTouchStart({ touches }) {
+      if (!(touches || []).length) return;
+      this.touchStart = touches[0].clientX;
+    },
+    handleTouhcEnd({ changedTouches }) {
+      if (!(changedTouches || []).length) return;
+
+      const xFrom = this.touchStart;
+      if (!xFrom) return;
+
+      const xTo = changedTouches[0].clientX;
+      const distance = 30;
+      if (xTo > xFrom + distance) this.handlePrevClick();
+      if (xTo < xFrom - distance) this.handleNextClick();
+    },
+
     getCardVisibleProp(index) {
       const [min, max] = this.minMaxScrollIndexes;
       return min <= index && index < max;
@@ -165,10 +195,14 @@ export default {
       this.scrollIndex = itemIndex;
     },
     handlePrevClick() {
+      if (!this.isPrevBtnVisible) return;
+
       const prevIndex = this.scrollIndex - this.visibleItemsLength;
       this.scrollSlider(prevIndex);
     },
     handleNextClick() {
+      if (!this.isNextBtnVisible) return;
+
       const prevIndex = this.scrollIndex + this.visibleItemsLength;
       this.scrollSlider(prevIndex);
     },

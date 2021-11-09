@@ -18,7 +18,7 @@
           :alt="name"
         />
         <div
-          v-if="!loading && !image"
+          v-if="!placeholder && !image"
           :class="`${className}-image__undefined`"
         />
       </div>
