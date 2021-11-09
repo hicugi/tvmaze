@@ -190,7 +190,7 @@ export default {
       const scrollToItem = this.getDomItem(itemIndex);
       const scrollToX = scrollToItem.offsetLeft - containerGap;
 
-      sliderContainer.scrollTo(scrollToX, 0);
+      sliderContainer.scrollTo({ left: scrollToX, behavior: "smooth" });
 
       this.scrollIndex = itemIndex;
     },
