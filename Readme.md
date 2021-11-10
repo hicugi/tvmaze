@@ -39,6 +39,29 @@ Router navigation uses `name`, `params` & `query` from `vue-router`.
 - Extra package for smooth scroll
 - Queries without cancellation
 
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
+The page will reload if you make edits.
+You will also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner
+See the section about [running tests](https://jestjs.io/docs/cli) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `dist` folder.
+The build is minified and the filenames include the hashes.
+This app is ready to be deployed!
+See the section about [deployment](https://cli.vuejs.org/guide/deployment.html#previewing-locally) for more information.
+
 ## Ecosystem
 
 | Package        | Status                                         | Description                     |
