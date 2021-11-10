@@ -3,9 +3,11 @@ const BASE_URL = "https://api.tvmaze.com";
 const generateUrl = (v) => [BASE_URL, v].join("");
 
 const api = {
+  BASE_URL,
+
   get(url, query = {}, ...atrs) {
     const formattedQuery = Object.entries(query)
-      .filter(([, value]) => value)
+      .filter(([, value]) => value !== undefined && value !== null)
       .map(([key, value]) =>
         [encodeURIComponent(key), encodeURIComponent(value)].join("=")
       )

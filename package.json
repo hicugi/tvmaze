@@ -9,7 +9,8 @@
     "start": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "jest"
   },
   "dependencies": {
     "@vue/cli-plugin-babel": "4.1.1",
@@ -21,11 +22,19 @@
     "@vue/cli-plugin-eslint": "4.1.1",
     "@vue/cli-service": "4.1.1",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^27.3.1",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.0.1",
+    "jest": "^27.3.1",
     "node-sass": "^4.0.0",
+    "regenerator-runtime": "^0.13.9",
     "sass-loader": "^10.0.0",
     "vue-template-compiler": "^2.6.11"
+  },
+  "jest": {
+    "transform": {
+      "\\.js$": "<rootDir>/node_modules/babel-jest"
+    }
   },
   "eslintConfig": {
     "root": true,
@@ -39,7 +48,21 @@
     "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "*.test.js"
+        ],
+        "rules": {
+          "no-restricted-syntax": 0,
+          "no-await-in-loop": 0
+        },
+        "env": {
+          "jest": true
+        }
+      }
+    ]
   },
   "postcss": {
     "plugins": {
