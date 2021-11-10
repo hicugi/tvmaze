@@ -51,7 +51,7 @@ export default {
       const { id } = this.$route.params;
       api
         .getShowInfo(id)
-        .then((data) => {
+        .then(({ data }) => {
           this.info = data;
         })
 

@@ -13,23 +13,30 @@ const api = {
       )
       .join("&");
 
-    const formattedUrl = formattedQuery ? [url, formattedQuery].join("?") : url;
+    let formattedUrl = formattedQuery ? [url, formattedQuery].join("?") : url;
+    formattedUrl = generateUrl(formattedUrl);
 
-    return fetch(generateUrl(formattedUrl), ...atrs).then((response) => {
-      const { status } = response;
+    return fetch(formattedUrl, ...atrs)
+      .then((response) => {
+        const { status } = response;
 
-      if (status === 404) {
-        throw new Error(404);
-      }
+        if (status === 404) {
+          throw new Error(404);
+        }
 
-      return response.json();
-    });
+        return response.json();
+      })
+      .then((data) => ({
+        url: formattedUrl,
+        data,
+      }));
   },
 
   getShows(query) {
-    return this.get("/shows", query).then((data) =>
-      data.map(this.mapShowsItem)
-    );
+    return this.get("/shows", query).then(({ data, ...attrs }) => ({
+      ...attrs,
+      data: data.map(this.mapShowsItem),
+    }));
   },
   mapShowsItem: ({ id, name, image, genres, rating }) => ({
     id,
@@ -40,37 +47,40 @@ const api = {
   }),
 
   getShowInfo(urlId) {
-    return this.get(`/shows/${urlId}`).then(
-      ({
-        id,
-        name,
-        summary,
-        image,
-        averageRuntime,
-        genres,
-        officialSite,
-        language,
-      }) => ({
-        id,
-        name,
-        description: summary,
-        image,
-        language,
-        averageRuntime,
-        genres,
-        website: officialSite,
-      })
-    );
+    return this.get(`/shows/${urlId}`).then(({ data, ...attrs }) => ({
+      ...attrs,
+      data: this.mapShowInfo(data),
+    }));
+  },
+  mapShowInfo: (data) => {
+    const keys = {
+      id: "id",
+      name: "name",
+      description: "summary",
+      image: "image",
+      language: "language",
+      averageRuntime: "averageRuntime",
+      genres: "genres",
+      website: "officialSite",
+    };
+
+    const result = Object.entries(keys).map(([formattedKey, key]) => [
+      formattedKey,
+      data[key],
+    ]);
+    return Object.fromEntries(result);
   },
 
   getSearchedShows(keywords) {
-    return this.get("/search/shows", { q: keywords }).then((data) => {
-      if (!data.length) {
-        throw new Error("No results");
-      }
+    return this.get("/search/shows", { q: keywords }).then(
+      ({ data, ...attrs }) => {
+        if (!data.length) {
+          throw new Error("No results");
+        }
 
-      return data.map((v) => this.mapShowsItem(v.show));
-    });
+        return { ...attrs, data: data.map((v) => this.mapShowsItem(v.show)) };
+      }
+    );
   },
 };
 

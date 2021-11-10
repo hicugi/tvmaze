@@ -59,7 +59,7 @@ export default {
 
       api
         .getShows()
-        .then((data) => {
+        .then(({ data }) => {
           this.items = data;
         })
         .finally(() => {

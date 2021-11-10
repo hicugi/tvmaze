@@ -65,7 +65,7 @@ export default {
 
       api
         .getSearchedShows(this.searchQuery)
-        .then((data) => {
+        .then(({ data }) => {
           this.items = data;
         })
 

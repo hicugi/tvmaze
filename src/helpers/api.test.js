@@ -1,9 +1,9 @@
 import api from "./api";
 import "regenerator-runtime/runtime";
 
-global.fetch = jest.fn((url) =>
+global.fetch = jest.fn(() =>
   Promise.resolve({
-    json: () => Promise.resolve(url),
+    json: (data) => Promise.resolve(data),
   })
 );
 
@@ -21,9 +21,16 @@ test("api.get generates correct url from object data", async () => {
     obj_null: null,
     obj_undefined: undefined,
   };
-  const queryStr = `${api.BASE_URL}${url}?number=0&string=hey&special_char=A%2FB`;
+  const generatedUrl = [
+    api.BASE_URL,
+    url,
+    "?number=0&string=hey&special_char=A%2FB",
+  ].join("");
 
-  const data = await api.get(url, queryObj);
+  const query = api.get(url, queryObj);
+  console.log("query: ", query.url);
 
-  expect(data).toBe(queryStr);
+  const response = await query;
+
+  expect(response.url).toBe(generatedUrl);
 });

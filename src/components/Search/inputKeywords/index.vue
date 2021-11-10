@@ -69,7 +69,7 @@ export default {
         api
           .getSearchedShows(value)
 
-          .then((data) => {
+          .then(({ data }) => {
             this.options = data;
           })
           .catch(() => {
